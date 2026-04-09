@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace movie_reservation_system.Extension;
 
-public class Utils
+public class Utils : IUtils
 {
     public string GenerateRandomUsername()
     {

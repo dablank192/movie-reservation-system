@@ -1,6 +1,7 @@
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using movie_reservation_system.Infrastructure;
+using movie_reservation_system.Extension;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
+
+builder.Services.AddScoped<IUtils, Utils>();
 
 var app = builder.Build();
 
