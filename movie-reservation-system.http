@@ -1,0 +1,6 @@
+@movie_reservation_system_HostAddress = http://localhost:5076
+
+GET {{movie_reservation_system_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
