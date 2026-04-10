@@ -2,7 +2,7 @@ using System;
 using movie_reservation_system.Infrastructure;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
-using movie_reservation_system.Exception;
+using FastEndpoints.Security;
 using System.Security.Authentication;
 using movie_reservation_system.Extension;
 
@@ -13,14 +13,16 @@ public class UserLogin : Endpoint<RequestModel, ResponseModel>
 {
     public AppDbContext _context {get; set;}
     public IUtils Utils {get; set;}
+    public IConfiguration _config {get; set;}
 
     public override void Configure()
     {
-        Post("api/v1/register");
+        Post("/login");
+        Group<AuthApi>();
         AllowAnonymous();
     }
 
-    public async Task HandleAsync (JwtAuth auth, RequestModel res, CancellationToken ct)
+    public override async Task HandleAsync (RequestModel res, CancellationToken ct)
     {
         var user = await _context.User.FirstOrDefaultAsync(u => u.Email == res.Email, ct);
 
@@ -36,7 +38,13 @@ public class UserLogin : Endpoint<RequestModel, ResponseModel>
             throw new InvalidCredentialException();
         }
 
-        var userToken = await auth.GenerateToken(user);
+        var userToken = JwtBearer.CreateToken(option =>
+        {
+            option.SigningKey= _config["Jwt:Key"]!;
+            option.ExpireAt= DateTime.UtcNow.AddHours(1);
+            option.User.Claims.Add(("userId", user.Id.ToString()));
+            option.User.Roles.Add(user.Roles.ToString());
+        });
 
         var response = new ResponseModel
         {

@@ -8,7 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AWSSDK.S3" Version="4.0.21" />
     <PackageReference Include="FastEndpoints" Version="8.1.0" />
+    <PackageReference Include="FastEndpoints.Security" Version="8.1.0" />
     <PackageReference Include="FastEndpoints.Swagger" Version="8.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.5" />
@@ -24,10 +26,14 @@
     <Folder Include="Dto\" />
     <Folder Include="Exception\" />
     <Folder Include="Exception\Auth\" />
+    <Folder Include="Exception\Movies\" />
     <Folder Include="Extension\" />
     <Folder Include="Features\Auth\" />
     <Folder Include="Features\Auth\UserLogin\" />
     <Folder Include="Features\Auth\UserRegister\" />
+    <Folder Include="Features\Movies\" />
+    <Folder Include="Features\Movies\AddMovies\" />
+    <Folder Include="Features\Movies\UpdateMovies\" />
     <Folder Include="Infrastructure\" />
     <Folder Include="Model\" />
   </ItemGroup>

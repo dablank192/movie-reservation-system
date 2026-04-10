@@ -4,6 +4,7 @@ using movie_reservation_system.Extension;
 using movie_reservation_system.Infrastructure;
 using movie_reservation_system.Exception.Auth;
 using Microsoft.EntityFrameworkCore;
+using movie_reservation_system.Features.Auth;
 
 
 namespace movie_reservation_system.Features.User;
@@ -15,7 +16,8 @@ public class UserRegister : Endpoint<UserRequestModel, UserResponseModel>
 
     public override void Configure()
     {
-        Post("api/v1/auth");
+        Post("/register");
+        Group<AuthApi>();
         AllowAnonymous();
     }
 
