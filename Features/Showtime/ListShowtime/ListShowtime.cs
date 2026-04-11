@@ -12,30 +12,21 @@ public class ListShowtime : EndpointWithoutRequest<List<ResponseModel>>
 
     public override void Configure()
     {
-        Get("/");
+        Get("api/v1/showtime");
         AllowAnonymous();
     }
 
     public override async Task HandleAsync (CancellationToken ct)
     {
-        var showtime = await _context.Showtime.ToListAsync(ct);
-
-        List<ResponseModel> result = []; 
-
-        foreach (var show in showtime)
+        var showtime = await _context.Showtime.Select(t => new ResponseModel
         {
-            var response = new ResponseModel
-            {
-                ShowtimeId= show.Id,
-                MovieId= show.MovieId,
-                RoomId= show.RoomId,
-                StartTime= show.StartTime,
-                EndTime= show.EndTime
-            };
+            ShowtimeId= t.Id,
+            MovieTitle= t.Movies!.Title,
+            RoomId= t.RoomId,
+            StartTime= t.StartTime,
+            EndTime= t.EndTime
+        }).OrderByDescending(t => t.StartTime).ToListAsync(ct);
 
-            result.Add(response);
-        }
-
-        await Send.OkAsync(result, ct);
+        await Send.OkAsync(showtime, ct);
     }
 }
