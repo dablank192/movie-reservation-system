@@ -32,23 +32,20 @@ public class UpdateMovies : Endpoint<RequestModel, ResponseModel>
         }
 
         string imageUrl = await _storage.UploadImage(req.ImageFile, req.ImageFile.FileName);
+        
+        movie.Title= req.Title ?? movie.Title;
+        movie.Description= req.Description ?? movie.Description;
+        movie.Category= req.Category ?? movie.Category;
+        movie.Duration= TimeSpan.Parse(req.Duration);
+        movie.MovieAvtUrl= imageUrl ?? movie.MovieAvtUrl;
 
-        var updatedMovie = new Model.Movies
-        {
-            Title= req.Title,
-            Description= req.Description,
-            Category= req.Category,
-            Duration= TimeSpan.Parse(req.Duration),
-            MovieAvtUrl= imageUrl
-        };
-
-        _context.Update(updatedMovie);
+        _context.Movies.Update(movie);
 
         await _context.SaveChangesAsync(ct);
 
         var response = new ResponseModel
         {
-            Id= updatedMovie.Id,
+            Id= movie.Id,
             Message= "Movie updated successfully"
         };
 

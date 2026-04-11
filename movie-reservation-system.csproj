@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="9.3.1" />
     <PackageReference Include="AWSSDK.S3" Version="4.0.21" />
     <PackageReference Include="FastEndpoints" Version="8.1.0" />
     <PackageReference Include="FastEndpoints.Security" Version="8.1.0" />
@@ -27,13 +28,20 @@
     <Folder Include="Exception\" />
     <Folder Include="Exception\Auth\" />
     <Folder Include="Exception\Movies\" />
+    <Folder Include="Exception\Showtime\" />
     <Folder Include="Extension\" />
     <Folder Include="Features\Auth\" />
     <Folder Include="Features\Auth\UserLogin\" />
     <Folder Include="Features\Auth\UserRegister\" />
     <Folder Include="Features\Movies\" />
     <Folder Include="Features\Movies\AddMovies\" />
+    <Folder Include="Features\Movies\DeleteMovies\" />
     <Folder Include="Features\Movies\UpdateMovies\" />
+    <Folder Include="Features\Showtime\" />
+    <Folder Include="Features\Showtime\AddShowtime\" />
+    <Folder Include="Features\Showtime\ListShowtime\" />
+    <Folder Include="Features\Showtime\Specifications\" />
+    <Folder Include="Features\Showtime\UpdateShowtime\" />
     <Folder Include="Infrastructure\" />
     <Folder Include="Model\" />
   </ItemGroup>
