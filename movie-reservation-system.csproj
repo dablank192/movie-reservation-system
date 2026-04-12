@@ -36,6 +36,8 @@
     <Folder Include="Features\Movies\" />
     <Folder Include="Features\Movies\AddMovies\" />
     <Folder Include="Features\Movies\DeleteMovies\" />
+    <Folder Include="Features\Movies\ListMovies\" />
+    <Folder Include="Features\Movies\SortListMovie\" />
     <Folder Include="Features\Movies\UpdateMovies\" />
     <Folder Include="Features\Showtime\" />
     <Folder Include="Features\Showtime\AddShowtime\" />
