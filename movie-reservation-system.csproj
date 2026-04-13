@@ -39,7 +39,7 @@
     <Folder Include="Features\Movies\ListMovies\" />
     <Folder Include="Features\Movies\SortListMovie\" />
     <Folder Include="Features\Movies\UpdateMovies\" />
-    <Folder Include="Features\Reservation\" />
+    <Folder Include="Features\Reservation\DeleteReservation\" />
     <Folder Include="Features\Seats\" />
     <Folder Include="Features\Seats\BookSeat\" />
     <Folder Include="Features\Seats\ListSeat\" />
