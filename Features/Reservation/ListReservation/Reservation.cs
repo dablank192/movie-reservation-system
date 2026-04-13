@@ -3,6 +3,8 @@ using System.Security.Claims;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using movie_reservation_system.Dto.Reservations;
+using movie_reservation_system.Exception.Reservation;
+using movie_reservation_system.Exception.Seats;
 using movie_reservation_system.Exception.Showtime;
 using movie_reservation_system.Infrastructure;
 
@@ -22,13 +24,14 @@ public class Reservation : EndpointWithoutRequest<ResponseModel>
     {
         int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        var reservation = await _context.Reservations.FirstOrDefaultAsync(r => r.UserId == userId, ct);
+        var reservation = await _context.Reservations.FirstOrDefaultAsync(r => r.UserId == userId, ct)
+            ?? throw new ReservationNotFoundException();
 
-        var showtime = await _context.Showtime.FindAsync(reservation!.ShowtimeId, ct) ?? throw new ShowtimeNotFoundException(reservation.ShowtimeId);
+        var showtime = await _context.Showtime.FindAsync(reservation!.ShowtimeId, ct)
+            ?? throw new ShowtimeNotFoundException(reservation.ShowtimeId);
     
-        var seat = await _context.ReservationSeats.FirstOrDefaultAsync(rs => rs.ReservationsId == reservation.Id, ct);
-
-        List<ReservationDto> allReserve = [];
+        var seat = await _context.ReservationSeats.FirstOrDefaultAsync(rs => rs.ReservationsId == reservation.Id, ct)
+            ?? throw new InvalidSeatException();
 
         var response = new ResponseModel
         {

@@ -2,6 +2,7 @@ using System;
 using System.Security.Claims;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
+using movie_reservation_system.Exception.Reservation;
 using movie_reservation_system.Infrastructure;
 
 
@@ -28,7 +29,8 @@ public class DeleteReservation : EndpointWithoutRequest<ResponseModel>
         var getReservation = await _context.Reservations.FirstOrDefaultAsync(
             r => r.UserId == userId &&
             r.Id == reservationId &&
-            r.Showtime!.StartTime > timeNow, ct);
+            r.Showtime!.StartTime > timeNow, ct)
+        ?? throw new ReservationNotFoundException();
 
         _context.Reservations.Remove(getReservation!);
 

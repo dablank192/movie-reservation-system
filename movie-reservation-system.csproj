@@ -27,6 +27,7 @@
     <Folder Include="Exception\" />
     <Folder Include="Exception\Auth\" />
     <Folder Include="Exception\Movies\" />
+    <Folder Include="Exception\Reservation\" />
     <Folder Include="Exception\Seats\" />
     <Folder Include="Exception\Showtime\" />
     <Folder Include="Extension\" />
