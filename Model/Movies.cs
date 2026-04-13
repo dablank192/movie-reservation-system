@@ -11,6 +11,7 @@ public class Movies
     public string? Description {get; set;}
     public MoviesCategory? Category {get; set;}
     public TimeSpan? Duration {get; set;}
+    public MovieStatus? Status {get; set;}
     public string? MovieAvtUrl {get; set;}
 
     public List<Showtime> Showtime {get; set;}   

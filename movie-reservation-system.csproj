@@ -24,10 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dto\" />
     <Folder Include="Exception\" />
     <Folder Include="Exception\Auth\" />
     <Folder Include="Exception\Movies\" />
+    <Folder Include="Exception\Seats\" />
     <Folder Include="Exception\Showtime\" />
     <Folder Include="Extension\" />
     <Folder Include="Features\Auth\" />
@@ -39,6 +39,10 @@
     <Folder Include="Features\Movies\ListMovies\" />
     <Folder Include="Features\Movies\SortListMovie\" />
     <Folder Include="Features\Movies\UpdateMovies\" />
+    <Folder Include="Features\Reservation\" />
+    <Folder Include="Features\Seats\" />
+    <Folder Include="Features\Seats\BookSeat\" />
+    <Folder Include="Features\Seats\ListSeat\" />
     <Folder Include="Features\Showtime\" />
     <Folder Include="Features\Showtime\AddShowtime\" />
     <Folder Include="Features\Showtime\ListShowtime\" />

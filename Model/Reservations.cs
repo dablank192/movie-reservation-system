@@ -9,7 +9,7 @@ public class Reservations
     public int Id {get; set;}
     public int UserId {get; set;}
     public int ShowtimeId {get; set;}
-    public int TotalAmount {get; set;}
+    public decimal TotalAmount {get; set;}
     public ReservationStatus Status {get; set;} = ReservationStatus.Pending;
 
     public User? User {get; set;}
