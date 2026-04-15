@@ -12,5 +12,6 @@ public class Showtime
 
     public Movies? Movies {get; set;}
     public Rooms? Rooms {get; set;}
+    public List<ReservationSeats> ReservationSeats {get; set;} 
     public List<Reservations> Reservations {get; set;}
 }

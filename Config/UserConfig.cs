@@ -12,9 +12,8 @@ public class UserConfig : IEntityTypeConfiguration<Model.User>
         builder.ToTable("User");
         builder.HasKey(t => t.Id);
 
-        builder.HasIndex(t => t.Id);
-
-        builder.HasIndex(t => t.Username);
+        builder.HasIndex(t => t.Username)
+        .IsUnique();
 
         builder.Property(t => t.HashPassword).IsRequired();
 

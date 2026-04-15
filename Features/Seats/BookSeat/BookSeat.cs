@@ -6,6 +6,7 @@ using movie_reservation_system.Exception.Seats;
 using movie_reservation_system.Exception.Showtime;
 using movie_reservation_system.Infrastructure;
 using movie_reservation_system.Model;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace movie_reservation_system.Features.Seats.BookSeat;
@@ -82,7 +83,17 @@ public class BookSeat : Endpoint<RequestModel, ResponseModel>
             ReservationsSeats = reservationList
         };
 
-        await _context.Reservations.AddAsync(newReservation, ct);
+        try
+        {
+            await _context.Reservations.AddAsync(newReservation, ct);
+
+            await _context.SaveChangesAsync(ct);
+        }
+
+        catch(DbUpdateException)
+        {
+            throw new UsedSeatException();
+        }
 
         var response = new ResponseModel
         {
