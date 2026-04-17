@@ -9,7 +9,6 @@ public class SeatApi : Group
     {
         Configure("api/v1/seats", t =>
         {
-            t.Roles("User");
             t.Description(t => t.WithTags("Seats Management"));
         });
     }

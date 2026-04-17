@@ -13,6 +13,7 @@ public class AddMovies : Endpoint<RequestModel, ResponseModel>
     public override void Configure()
     {
         Post("/");
+        Roles("Admin");
         Group<MoviesApi>();
     }
 

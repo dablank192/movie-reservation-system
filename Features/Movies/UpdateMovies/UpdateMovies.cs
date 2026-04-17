@@ -17,6 +17,7 @@ public class UpdateMovies : Endpoint<RequestModel, ResponseModel>
     {
         Patch("/{id}");
         Group<MoviesApi>();
+        Roles("Admin");
         AllowFileUploads();
     }
 

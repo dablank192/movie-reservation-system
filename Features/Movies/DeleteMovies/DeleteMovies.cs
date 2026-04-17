@@ -15,6 +15,7 @@ public class DeleteMovies : EndpointWithoutRequest
     public override void Configure()
     {
         Delete("/{id}");
+        Roles("Admin");
         Group<MoviesApi>();
     }
 

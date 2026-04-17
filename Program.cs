@@ -16,9 +16,11 @@ var jwtKey = builder.Configuration["Jwt:Key"];
 builder.Services.AddAuthenticationJwtBearer(s => s.SigningKey = jwtKey);
 builder.Services.AddAuthorization();
 
-builder.Services.AddOpenApi();
 builder.Services.AddFastEndpoints();
-builder.Services.AddSwaggerDocument();
+builder.Services.SwaggerDocument(t =>
+{
+    t.EnableJWTBearerAuth = true;
+});
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -32,10 +34,6 @@ builder.Services.AddSingleton<IS3Storage, S3Storage>();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -43,6 +41,22 @@ app.UseAuthorization();
 app.UseHttpsRedirection();
 app.UseFastEndpoints();
 app.UseSwaggerGen();
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    try
+    {
+        await DataSeeder.ExecuteAsync(services);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Some error popup while data seeding");
+    }
+}
 
 
 app.Run();

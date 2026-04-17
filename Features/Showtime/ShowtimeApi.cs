@@ -10,7 +10,6 @@ public class ShowtimeApi : Group
     {
         Configure("api/v1/showtime", t =>
         {
-            t.Roles("Admin");
             t.Description(t => t.WithTags("Showtimes Management (Admin)"));
         });
     }

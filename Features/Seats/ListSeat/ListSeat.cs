@@ -16,6 +16,7 @@ public class ListSeat : EndpointWithoutRequest<List<ResponseModel>>
     public override void Configure()
     {
         Get("/{showtimeId}");
+        Roles("User", "Admin");
         Group<SeatApi>();
     }
 

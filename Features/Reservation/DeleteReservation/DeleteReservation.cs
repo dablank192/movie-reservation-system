@@ -15,12 +15,17 @@ public class DeleteReservation : EndpointWithoutRequest<ResponseModel>
     public override void Configure()
     {
         Delete("/{reservationId}");
+        Roles("User", "Admin");
         Group<ReservationApi>();
     }
 
     public override async Task HandleAsync (CancellationToken ct)
     {
-        int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var userIdString = this.User.FindFirstValue("UserId");
+
+        int userId;
+
+        var toInt = int.TryParse(userIdString, out userId);
 
         int reservationId = Route<int>("reservationId");
 

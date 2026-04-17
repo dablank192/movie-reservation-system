@@ -17,11 +17,11 @@ public class JwtAuth
         _config = config;
     }
 
-    public async Task<string> GenerateToken (Model.User user)
+    public string GenerateToken (Model.User user)
     {
         var claims = new List<Claim>
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new Claim("UserId", user.Id.ToString()),
 
             new Claim(ClaimTypes.Role, user.Roles.ToString())
         };

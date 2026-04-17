@@ -16,6 +16,7 @@ public class UpdateShowtime : Endpoint<RequestModel, ResponseModel>
     public override void Configure()
     {
         Patch("/{id}");
+        Roles("Admin");
         Group<ShowtimeApi>();
     }
 

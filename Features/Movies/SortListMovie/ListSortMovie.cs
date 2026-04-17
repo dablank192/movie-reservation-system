@@ -14,7 +14,8 @@ public class ListSortMovie : Endpoint<RequestModel, List<ResponseModel>>
 
     public override void Configure()
     {
-        Get("api/v1/movies");
+        Get("/sorted");
+        Group<MoviesApi>();
         AllowAnonymous();
     }
 

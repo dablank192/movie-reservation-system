@@ -14,7 +14,8 @@ public class ListMovie : EndpointWithoutRequest<List<ResponseModel>>
 
     public override void Configure()
     {
-        Get("api/v1/movies");
+        Get("/");
+        Group<MoviesApi>();
         AllowAnonymous();
     }
 

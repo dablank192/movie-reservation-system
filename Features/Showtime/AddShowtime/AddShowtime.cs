@@ -17,6 +17,7 @@ public class AddShowtime : Endpoint<RequestModel, ResponseModel>
     {
         Post("/");
         Group<ShowtimeApi>();
+        Roles("Admin");
     }
 
     public override async Task HandleAsync (RequestModel req, CancellationToken ct)

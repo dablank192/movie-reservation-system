@@ -18,6 +18,7 @@ public class BookSeat : Endpoint<RequestModel, ResponseModel>
     public override void Configure()
     {
         Post("/book");
+        Roles("User", "Admin");
         Group<SeatApi>();
     }
 
@@ -29,7 +30,11 @@ public class BookSeat : Endpoint<RequestModel, ResponseModel>
 
         List<ReservationSeats> reservationList = [];
 
-        int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var userIdString = this.User.FindFirstValue("UserId");
+
+        int userId;
+
+        var toInt = int.TryParse(userIdString, out userId);
 
         var showtime = await _context.Showtime.FindAsync(req.ShowtimeId, ct) ?? throw new ShowtimeNotFoundException(req.ShowtimeId);
     

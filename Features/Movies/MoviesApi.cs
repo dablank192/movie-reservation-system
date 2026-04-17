@@ -9,7 +9,6 @@ public class MoviesApi : Group
     {
         Configure("api/v1/movies/admin", ep =>
         {
-            ep.Roles("Admin");
             ep.Description(t => t.WithTags("Movies Management (Admin)"));
         });
     }

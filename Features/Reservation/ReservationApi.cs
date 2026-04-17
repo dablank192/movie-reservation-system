@@ -9,7 +9,6 @@ public class ReservationApi : Group
     {
         Configure("api/v1/reservation", t =>
         {
-            t.Roles("User");
             t.Description(t => t.WithTags("Reservation Management"));
         });
     }

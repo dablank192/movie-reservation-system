@@ -12,7 +12,8 @@ public class ListShowtime : EndpointWithoutRequest<List<ResponseModel>>
 
     public override void Configure()
     {
-        Get("api/v1/showtime");
+        Get("/");
+        Group<ShowtimeApi>();
         AllowAnonymous();
     }
 
