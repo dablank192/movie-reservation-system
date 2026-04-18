@@ -1,6 +1,7 @@
 using System;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
+using movie_reservation_system.Dto;
 using movie_reservation_system.Exception.Movies;
 using movie_reservation_system.Features.Movies.DeleteMovies;
 using movie_reservation_system.Infrastructure;
@@ -30,7 +31,9 @@ public class DeleteMovies : EndpointWithoutRequest
             throw new MoviesNotFoundException();
         }
 
-        _context.Remove(movie);
+        movie.Status= MovieStatus.Stopped;
+
+        _context.Movies.Update(movie);
         await _context.SaveChangesAsync(ct);
 
         System.Console.WriteLine("Movie deleted successfully");

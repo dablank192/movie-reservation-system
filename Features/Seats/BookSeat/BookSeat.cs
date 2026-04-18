@@ -24,6 +24,8 @@ public class BookSeat : Endpoint<RequestModel, ResponseModel>
 
     public override async Task HandleAsync (RequestModel req, CancellationToken ct)
     {
+        int userId;
+        
         decimal totalPrice = 0;
 
         List<SeatDto> Seats = [];
@@ -32,51 +34,57 @@ public class BookSeat : Endpoint<RequestModel, ResponseModel>
 
         var userIdString = this.User.FindFirstValue("UserId");
 
-        int userId;
-
-        var toInt = int.TryParse(userIdString, out userId);
+        if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out userId))
+        {
+            await Send.ErrorsAsync(401, ct);
+            return;
+        }
 
         var showtime = await _context.Showtime.FindAsync(req.ShowtimeId, ct)
         ?? throw new ShowtimeNotFoundException(req.ShowtimeId);
     
+        var bookedSeatShowtime = await _context.ReservationSeats
+        .Where(rs => rs.Reservations!.ShowtimeId == showtime.Id)
+        .Select(rs => rs.SeatId)
+        .ToListAsync(ct);
 
-        foreach (var seat in req.SeatId!)
+        var overlappingSeat = req.SeatId!
+        .Intersect(bookedSeatShowtime)
+        .ToList();
+
+        if (overlappingSeat.Any())
         {
-            var bookedSeat = _context.Seats.Any(s => s.Id == seat &&
-            s.RoomId == showtime.RoomId &&
-            s.ReservationSeats.Any(t => t.SeatId == seat));
-
-            if (bookedSeat == true)
-            {
-                throw new InvalidSeatException();
-            }
+            throw new UsedSeatException();
         }
 
-        foreach (var seat in req.SeatId)
+        var validSeats = await _context.Seats
+        .Where(s => req.SeatId!.Contains(s.Id) && s.RoomId == showtime.RoomId)
+        .ToListAsync(ct);
+
+        if (validSeats.Count() != req.SeatId!.Count())
         {
-            var seats = await _context.Seats.FindAsync(seat, ct);
+            throw new InvalidSeatException();
+        }
 
-            if (seats == null)
-            {
-                throw new InvalidSeatException();
-            }
-
-            int price = seats.Type == SeatsType.Vip ? (int)SeatPrice.Vip : (int)SeatPrice.Normal;
+        foreach (var seat in validSeats)
+        {
+            int price = seat.Type == SeatsType.Vip ? (int)SeatPrice.Vip : (int)SeatPrice.Normal;
 
             totalPrice += price;
 
             reservationList.Add(new ReservationSeats
             {
-                SeatId = seat,
+                ShowtimeId= req.ShowtimeId,
+                SeatId = seat.Id,
                 PriceAtBooking = price
             });
 
             Seats.Add(new SeatDto
             {
-                Id= seat,
-                Row= seats.Row,
-                Number= seats.Number,
-                Type= seats.Type
+                Id= seat.Id,
+                Row= seat.Row,
+                Number= seat.Number,
+                Type= seat.Type
             });
         }
 

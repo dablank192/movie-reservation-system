@@ -42,12 +42,13 @@ public class UserLogin : Endpoint<RequestModel, ResponseModel>
         {
             option.SigningKey= _config["Jwt:Key"]!;
             option.ExpireAt= DateTime.UtcNow.AddHours(1);
-            option.User.Claims.Add(("userId", user.Id.ToString()));
+            option.User.Claims.Add(("UserId", user.Id.ToString()));
             option.User.Roles.Add(user.Roles.ToString());
         });
 
         var response = new ResponseModel
         {
+            Id= user.Id,
             Token= userToken
         };
 
