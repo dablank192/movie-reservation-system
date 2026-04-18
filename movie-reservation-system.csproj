@@ -31,7 +31,7 @@
     <Folder Include="Exception\Seats\" />
     <Folder Include="Exception\Showtime\" />
     <Folder Include="Extension\" />
-    <Folder Include="Features\Auth\" />
+    <Folder Include="Features\Auth\AdminRegister\" />
     <Folder Include="Features\Auth\UserLogin\" />
     <Folder Include="Features\Auth\UserRegister\" />
     <Folder Include="Features\Movies\" />

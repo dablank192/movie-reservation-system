@@ -36,7 +36,8 @@ public class BookSeat : Endpoint<RequestModel, ResponseModel>
 
         var toInt = int.TryParse(userIdString, out userId);
 
-        var showtime = await _context.Showtime.FindAsync(req.ShowtimeId, ct) ?? throw new ShowtimeNotFoundException(req.ShowtimeId);
+        var showtime = await _context.Showtime.FindAsync(req.ShowtimeId, ct)
+        ?? throw new ShowtimeNotFoundException(req.ShowtimeId);
     
 
         foreach (var seat in req.SeatId!)

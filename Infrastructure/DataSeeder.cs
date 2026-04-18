@@ -57,6 +57,7 @@ public static class DataSeeder
             }
         }
         await context.Seats.AddRangeAsync(seats);
+        await context.SaveChangesAsync();
 
         var movies = new List<Movies>
         {
@@ -130,14 +131,14 @@ public static class DataSeeder
 
             new()
             {
-                MovieId= movies[4].Id,
+                MovieId= movies[0].Id,
                 RoomId= room1.Id,
                 StartTime= today.AddDays(1).AddHours(18),
                 EndTime= today.AddHours(18).AddMinutes(movies[1].Duration?.TotalMinutes ?? 0)
             }
         };
 
-        await context.AddRangeAsync(showtime);
+        await context.Showtime.AddRangeAsync(showtime);
         await context.SaveChangesAsync();
     }
 }
