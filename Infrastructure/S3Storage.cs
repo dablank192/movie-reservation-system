@@ -43,7 +43,7 @@ public class S3Storage : IS3Storage
             Key= $"movie/{fileName}",
             InputStream= file.OpenReadStream(),
             ContentType= file.ContentType,
-            DisablePayloadSigning= false
+            DisablePayloadSigning= true
         };
 
         await _s3client.PutObjectAsync(uploadRequest);

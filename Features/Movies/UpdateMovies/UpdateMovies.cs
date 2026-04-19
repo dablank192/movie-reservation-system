@@ -32,13 +32,20 @@ public class UpdateMovies : Endpoint<RequestModel, ResponseModel>
             throw new MoviesNotFoundException();
         }
 
-        string imageUrl = await _storage.UploadImage(req.ImageFile, req.ImageFile.FileName);
-        
+        if (req.ImageFile != null && req.ImageFile.Length > 0)
+        {
+            string imageUrl = await _storage.UploadImage(req.ImageFile, req.ImageFile.FileName);
+            movie.MovieAvtUrl= imageUrl;
+        }
+
         movie.Title= req.Title ?? movie.Title;
         movie.Description= req.Description ?? movie.Description;
         movie.Category= req.Category ?? movie.Category;
-        movie.Duration= TimeSpan.Parse(req.Duration);
-        movie.MovieAvtUrl= imageUrl ?? movie.MovieAvtUrl;
+
+        if (!string.IsNullOrEmpty(req.Duration))
+        {
+            movie.Duration= TimeSpan.Parse(req.Duration!);
+        }
 
         _context.Movies.Update(movie);
 

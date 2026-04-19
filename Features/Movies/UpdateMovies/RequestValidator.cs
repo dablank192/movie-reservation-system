@@ -24,9 +24,9 @@ public class RequestValidator : AbstractValidator<RequestModel>
         .When(x => x.Duration != null);
 
         RuleFor(x => x.ImageFile)
-        .Must(t => !t.ContentType.Contains("jpeg") || !t.ContentType.Contains("png"))
-        .WithMessage("Invalid File Format")
-        .When(x => x.ImageFile != null);
+        .Must(t => t.ContentType != null && (t.ContentType.Contains("jpeg") || t.ContentType.Contains("png")))
+        .WithMessage("Invalid File Format, only accept JPG or PNG")
+        .When(x => x.ImageFile != null && x.ImageFile.Length > 0 );
 
         RuleFor(x => x)
         .Must(x => x.Title != null || x.Description != null || x.Duration != null || x.Category != null || x.ImageFile != null)
