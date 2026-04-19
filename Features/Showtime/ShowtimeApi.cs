@@ -8,7 +8,7 @@ public class ShowtimeApi : Group
 {
     public ShowtimeApi ()
     {
-        Configure("api/v1/showtime", t =>
+        Configure("api/v1/showtime/admin", t =>
         {
             t.Description(t => t.WithTags("Showtimes Management (Admin)"));
         });

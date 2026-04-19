@@ -1,7 +1,10 @@
 using System;
+using System.Globalization;
 using FastEndpoints;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using movie_reservation_system.Dto;
+using movie_reservation_system.Exception.Movies;
 using movie_reservation_system.Infrastructure;
 using movie_reservation_system.Model;
 
@@ -15,14 +18,22 @@ public class ListSortMovie : Endpoint<RequestModel, List<ResponseModel>>
     public override void Configure()
     {
         Get("/sorted");
-        Group<MoviesApi>();
+        Group<MoviesApiUser>();
         AllowAnonymous();
     }
 
     public override async Task HandleAsync (RequestModel req, CancellationToken ct)
     {
-        DateTime startDate = req.StartDate.Date;
-        DateTime endDate = req.StartDate.AddDays(1);
+        if (!DateTime.TryParseExact(req.StartDate, "yyyy-MM-dd",
+        CultureInfo.InvariantCulture,
+        DateTimeStyles.None,
+        out DateTime parsedDate))
+        {
+            throw new InvalidDateFormatException();
+        }
+        
+        DateTime startDate = parsedDate.Date;
+        DateTime endDate = parsedDate.AddDays(1);
 
         var movies = await _context.Movies
         .Where(m => m.Showtime.Any(s => s.StartTime >= startDate && s.StartTime < endDate))

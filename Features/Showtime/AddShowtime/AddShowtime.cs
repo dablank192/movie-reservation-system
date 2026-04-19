@@ -2,6 +2,7 @@ using System;
 using Ardalis.Specification.EntityFrameworkCore;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
+using movie_reservation_system.Dto.Showtime;
 using movie_reservation_system.Exception.Showtime;
 using movie_reservation_system.Features.Showtime.Specifications;
 using movie_reservation_system.Infrastructure;
@@ -45,6 +46,7 @@ public class AddShowtime : Endpoint<RequestModel, ResponseModel>
         {
             MovieId= req.MovieId,
             RoomId= req.RoomId,
+            Status= ShowtimeStatus.Opened,
             StartTime= startTime,
             EndTime= endTime
         };

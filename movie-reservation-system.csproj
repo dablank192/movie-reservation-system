@@ -46,6 +46,7 @@
     <Folder Include="Features\Seats\ListSeat\" />
     <Folder Include="Features\Showtime\" />
     <Folder Include="Features\Showtime\AddShowtime\" />
+    <Folder Include="Features\Showtime\DeleteShowtime\" />
     <Folder Include="Features\Showtime\ListShowtime\" />
     <Folder Include="Features\Showtime\Specifications\" />
     <Folder Include="Features\Showtime\UpdateShowtime\" />

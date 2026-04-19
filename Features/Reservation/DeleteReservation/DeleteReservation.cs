@@ -2,6 +2,7 @@ using System;
 using System.Security.Claims;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
+using movie_reservation_system.Dto;
 using movie_reservation_system.Exception.Reservation;
 using movie_reservation_system.Infrastructure;
 
@@ -14,7 +15,7 @@ public class DeleteReservation : EndpointWithoutRequest<ResponseModel>
 
     public override void Configure()
     {
-        Delete("/{reservationId}");
+        Put("/{reservationId}");
         Roles("User", "Admin");
         Group<ReservationApi>();
     }
@@ -37,7 +38,7 @@ public class DeleteReservation : EndpointWithoutRequest<ResponseModel>
             r.Showtime!.StartTime > timeNow, ct)
         ?? throw new ReservationNotFoundException();
 
-        _context.Reservations.Remove(getReservation!);
+        getReservation.Status = ReservationStatus.Canceled;
 
         await _context.SaveChangesAsync(ct);
 

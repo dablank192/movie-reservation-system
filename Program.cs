@@ -4,7 +4,11 @@ using movie_reservation_system.Infrastructure;
 using movie_reservation_system.Extension;
 using FastEndpoints.Swagger;
 using FastEndpoints.Security;
+using movie_reservation_system.Exception;
 
+
+//Allow Postgres to use its old TimestampBehavior
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +30,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseNpgsql(connectionString);
 });
+
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 builder.Services.AddScoped<IUtils, Utils>();
 

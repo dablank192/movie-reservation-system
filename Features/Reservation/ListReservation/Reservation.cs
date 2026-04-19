@@ -3,6 +3,7 @@ using System.Security.Claims;
 using FastEndpoints;
 using FastEndpoints.Security;
 using Microsoft.EntityFrameworkCore;
+using movie_reservation_system.Dto;
 using movie_reservation_system.Dto.Reservations;
 using movie_reservation_system.Exception.Reservation;
 using movie_reservation_system.Exception.Seats;
@@ -32,7 +33,7 @@ public class Reservation : EndpointWithoutRequest<List<ResponseModel>>
         var toInt = int.TryParse(userIdString, out userId);
 
         var userReservation = await _context.Reservations
-        .Where(r => r.UserId == userId)
+        .Where(r => r.UserId == userId && (r.Status == ReservationStatus.Pending || r.Status == ReservationStatus.Confirmed))
         .Include(r => r.Showtime)
             .ThenInclude(r => r.Movies)
         .Include(r => r.ReservationsSeats)
