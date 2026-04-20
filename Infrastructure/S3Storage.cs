@@ -29,6 +29,7 @@ public class S3Storage : IS3Storage
         _s3client = new AmazonS3Client (
             s3config["AccessKey"],
             s3config["SecretKey"],
+            s3config["Region"],
             amazonS3Config
         );
 
