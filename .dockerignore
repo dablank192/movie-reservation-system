@@ -1,0 +1,7 @@
+**/bin
+**/obj
+**/Properties
+**/Dockerfiles*
+**/.dockerignore
+**/appsettings.development.json
+**/*.sln
