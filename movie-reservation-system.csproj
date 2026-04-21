@@ -33,6 +33,7 @@
     <Folder Include="Extension\" />
     <Folder Include="Features\Auth\AdminRegister\" />
     <Folder Include="Features\Auth\UserLogin\" />
+    <Folder Include="Features\Auth\UserPromote\" />
     <Folder Include="Features\Auth\UserRegister\" />
     <Folder Include="Features\Movies\" />
     <Folder Include="Features\Movies\AddMovies\" />
@@ -52,6 +53,13 @@
     <Folder Include="Features\Showtime\UpdateShowtime\" />
     <Folder Include="Infrastructure\" />
     <Folder Include="Model\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="movie-reservation-system.Test\**" />
+    <Content Remove="movie-reservation-system.Test\**" />
+    <EmbeddedResource Remove="movie-reservation-system.Test\**" />
+    <None Remove="movie-reservation-system.Test\**" />
   </ItemGroup>
 
 </Project>
