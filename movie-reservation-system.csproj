@@ -41,6 +41,9 @@
     <Folder Include="Features\Movies\ListMovies\" />
     <Folder Include="Features\Movies\SortListMovie\" />
     <Folder Include="Features\Movies\UpdateMovies\" />
+    <Folder Include="Features\Payment\" />
+    <Folder Include="Features\Payment\Gateway\" />
+    <Folder Include="Features\Payment\Webhook\" />
     <Folder Include="Features\Reservation\DeleteReservation\" />
     <Folder Include="Features\Seats\" />
     <Folder Include="Features\Seats\BookSeat\" />
