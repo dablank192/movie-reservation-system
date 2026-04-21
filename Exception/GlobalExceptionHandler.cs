@@ -106,6 +106,14 @@ public class GlobalExceptionHandler : IExceptionHandler
             problemDetails.Status = StatusCodes.Status409Conflict;
         }
 
+        else if (exception is UserNotFoundException)
+        {
+            httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+            problemDetails.Title = "User not existed";
+            problemDetails.Detail = exception.Message;
+            problemDetails.Status = StatusCodes.Status404NotFound;
+        }
+
         await httpContext.Response.WriteAsJsonAsync(problemDetails, ct);
 
         return true;
