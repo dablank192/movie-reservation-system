@@ -94,6 +94,7 @@ public class BookSeat : Endpoint<RequestModel, ResponseModel>
             ShowtimeId= req.ShowtimeId,
             TotalAmount= totalPrice,
             Status= ReservationStatus.Pending,
+            ExpiredAt= DateTime.UtcNow.AddMinutes(10),
             ReservationsSeats = reservationList
         };
 

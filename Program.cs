@@ -5,6 +5,7 @@ using movie_reservation_system.Extension;
 using FastEndpoints.Swagger;
 using FastEndpoints.Security;
 using movie_reservation_system.Exception;
+using movie_reservation_system.Infrastructure.BackgroundService;
 
 
 //Allow Postgres to use its old TimestampBehavior
@@ -38,6 +39,8 @@ builder.Services.AddProblemDetails();
 builder.Services.AddScoped<IUtils, Utils>();
 
 builder.Services.AddSingleton<IS3Storage, S3Storage>();
+
+builder.Services.AddHostedService<SeatCleanupService>();
 
 
 var app = builder.Build();
