@@ -10,6 +10,7 @@ public class Reservations
     public int UserId {get; set;}
     public int ShowtimeId {get; set;}
     public decimal TotalAmount {get; set;}
+    public DateTime ExpiredAt {get; set;}
     public ReservationStatus Status {get; set;} = ReservationStatus.Pending;
 
     public User? User {get; set;}
