@@ -23,12 +23,15 @@ The system provides a full set of 19 RESTful APIs managed by FastEndpoints, orga
 
 * **Vertical Slice Architecture**: Implemented using the REPR pattern (Request-Endpoint-Response), improving code clarity and independence.
 * **Real-time Seat Locking**: Temporarily holds seats while users complete payment.
-* **Automated Background Services**:
+* **Automated Background Services**: Used built-in .NET library
 
   * **SeatCleanupService**: Automatically releases seats after 15 minutes if payment is not completed.
-  * **SendEmailService**: Background worker that processes email queue and sends tickets to customers.
+  * **SendEmailService**: Background worker that processes email queue and sends confirmed booking and tickets to customers.
 * **Payment Integration**: Integrated SePay webhook with smart Regex logic to identify transaction codes from bank transfers.
 * **Cloud Asset Management**: Store and manage movie images using Supabase S3 Storage.
+* **Applied Database Unique-Constraints**: Prevent overbooking and manage reservations efficiently.
+* **Data Seeder**: Data seeder for full feature testing purposes.
+* **Administration**: Complete User, Movie, Seat, Showtime, and Booking Management for admins.
 
 ---
 
@@ -69,7 +72,7 @@ dotnet ef database update
 
 ### Setup Webhook Tunnel
 
-Use Ngrok to receive callbacks from SePay to your localhost:
+Use Ngrok to receive callbacks from SePay (or any payment gateway service of your liking) to your localhost:
 
 ```bash
 ngrok http https://localhost:5001
