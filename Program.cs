@@ -39,8 +39,10 @@ builder.Services.AddProblemDetails();
 builder.Services.AddScoped<IUtils, Utils>();
 
 builder.Services.AddSingleton<IS3Storage, S3Storage>();
+builder.Services.AddSingleton<EmailQueue>();
 
 builder.Services.AddHostedService<SeatCleanupService>();
+builder.Services.AddHostedService<SendEmailService>();
 
 
 var app = builder.Build();

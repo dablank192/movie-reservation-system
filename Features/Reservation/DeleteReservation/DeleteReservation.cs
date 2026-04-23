@@ -15,7 +15,7 @@ public class DeleteReservation : EndpointWithoutRequest<ResponseModel>
 
     public override void Configure()
     {
-        Put("/{reservationId}");
+        Delete("/{reservationId}");
         Roles("User", "Admin");
         Group<ReservationApi>();
     }

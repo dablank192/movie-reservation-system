@@ -34,8 +34,7 @@ public class GatewayEp : EndpointWithoutRequest<ResponseModel>
 
         var price = reservations.TotalAmount;
 
-        DateTime paymentTime = DateTime.UtcNow;
-        string receipt = $"TICKET_{reservationId}_{paymentTime:yyyyMMdd}";
+        string receipt = $"TICKET{reservationId}";
 
         var paymentUrl = $"https://qr.sepay.vn/img?acc={accountNumber}&bank={bankName}&amount={price}&des={receipt}&template={template}&download={download}";
     
