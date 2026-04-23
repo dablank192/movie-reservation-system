@@ -8,7 +8,7 @@ Inspired by: https://roadmap.sh/projects/movie-reservation-system
 
 ## APIs
 
-The system provides a full set of RESTful APIs managed by FastEndpoints, organized into the following main groups:
+The system provides a full set of 19 RESTful APIs managed by FastEndpoints, organized into the following main groups:
 
 * **Auth API**: Registration, Login (JWT), Role-based authorization (Admin/User).
 * **Movies API**: Manage movie information, genres, and posters (S3).
