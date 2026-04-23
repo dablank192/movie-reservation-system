@@ -33,7 +33,7 @@ public class Reservation : EndpointWithoutRequest<List<ResponseModel>>
         var toInt = int.TryParse(userIdString, out userId);
 
         var userReservation = await _context.Reservations
-        .Where(r => r.UserId == userId && (r.Status == ReservationStatus.Pending || r.Status == ReservationStatus.Confirmed))
+        .Where(r => r.UserId == userId)
         .Include(r => r.Showtime)
             .ThenInclude(r => r.Movies)
         .Include(r => r.ReservationsSeats)
