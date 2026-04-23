@@ -5,7 +5,8 @@
 
 # dotenv files
 .env
-*.movie-reservation-system.Test
+movie-reservation-system.Test
+movie-reservation-system.Test.csproj
 
 # User-specific files
 *.rsuser
