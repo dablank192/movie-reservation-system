@@ -1,10 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>movie_reservation_system</RootNamespace>
+    <UserSecretsId>c90b5997-8e3c-4afe-b430-5184d568b8f8</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
