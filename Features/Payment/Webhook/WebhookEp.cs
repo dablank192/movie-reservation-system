@@ -1,9 +1,12 @@
 using System;
 using System.Text.RegularExpressions;
 using FastEndpoints;
+using Microsoft.EntityFrameworkCore;
 using movie_reservation_system.Dto;
+using movie_reservation_system.Dto.Email;
 using movie_reservation_system.Exception.Reservation;
 using movie_reservation_system.Infrastructure;
+using movie_reservation_system.Infrastructure.BackgroundService;
 
 
 namespace movie_reservation_system.Features.Payment.Webhook;
@@ -12,6 +15,7 @@ public class WebhookEp : Endpoint<RequestModel, ResponseModel>
 {
     public AppDbContext? _context {get; set;}
     public IConfiguration? _config {get; set;}
+    public EmailQueue _queue {get; set;}
 
     public override void Configure()
     {
@@ -48,7 +52,7 @@ public class WebhookEp : Endpoint<RequestModel, ResponseModel>
             return;
         }
 
-        var matchInvoice = Regex.Match(req.content, @"TICKET_(\d+)", RegexOptions.IgnoreCase);
+        var matchInvoice = Regex.Match(req.content, @"TICKET[\s_]*(\d+)", RegexOptions.IgnoreCase);
 
         if (!matchInvoice.Success)
         {
@@ -65,7 +69,9 @@ public class WebhookEp : Endpoint<RequestModel, ResponseModel>
 
         int reservationId = int.Parse(matchInvoice.Groups[1].Value);
 
-        var reservations = await _context!.Reservations.FindAsync(reservationId, ct);
+        var reservations = await _context!.Reservations
+        .Include(r => r.User)
+        .FirstOrDefaultAsync(r => r.Id == reservationId, ct);
 
         if (reservations == null)
         {
@@ -111,6 +117,28 @@ public class WebhookEp : Endpoint<RequestModel, ResponseModel>
         reservations.Status = ReservationStatus.Confirmed;
 
         await _context.SaveChangesAsync(ct);
+
+        Console.WriteLine("=== DEBUG EMAIL ===");
+        Console.WriteLine($"Có thấy User không? {(reservations.User == null ? "KHÔNG" : "CÓ")}");
+        if (reservations.User != null) {
+            Console.WriteLine($"Email của User là gì? {reservations.User.Email}");
+        }
+        Console.WriteLine("===================");
+
+        if (reservations.User != null && !string.IsNullOrEmpty(reservations.User.Email))
+        {
+            var email = new EmailMessage
+            {
+                ToEmail= reservations.User.Email,
+                Subject= "Reservation Confirmed",
+                Body= $"""
+                <h1>Thank you for using ours service</h1>
+                <p>Your ticket code is: {req.content}. Please informed at the front desk with this email</p>
+                """
+            };
+
+            await _queue.IntoQueueAsync(email);
+        }
 
         await Send.OkAsync(
             new ResponseModel

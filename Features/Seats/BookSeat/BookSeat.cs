@@ -44,7 +44,9 @@ public class BookSeat : Endpoint<RequestModel, ResponseModel>
         ?? throw new ShowtimeNotFoundException(req.ShowtimeId);
     
         var bookedSeatShowtime = await _context.ReservationSeats
-        .Where(rs => rs.Reservations!.ShowtimeId == showtime.Id)
+        .Where(rs => rs.Reservations!.ShowtimeId == showtime.Id
+        && rs.Reservations.Status == ReservationStatus.Pending
+        && rs.Reservations.ExpiredAt >= DateTime.UtcNow)
         .Select(rs => rs.SeatId)
         .ToListAsync(ct);
 
@@ -52,7 +54,7 @@ public class BookSeat : Endpoint<RequestModel, ResponseModel>
         .Intersect(bookedSeatShowtime)
         .ToList();
 
-        if (overlappingSeat.Any())
+        if (overlappingSeat.Count > 0)
         {
             throw new UsedSeatException();
         }
